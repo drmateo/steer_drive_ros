@@ -43,7 +43,10 @@
 #include <base_local_planner/costmap_model.h>
 #include <costmap_2d/costmap_2d_ros.h>
 #include <geometry_msgs/Pose2D.h>
+#include <geometry_msgs/Twist.h>
 #include <std_msgs/Bool.h>
+
+#include <tf2/buffer_core.h>
 
 namespace gm=geometry_msgs;
 namespace cmap=costmap_2d;
@@ -66,7 +69,7 @@ public:
   ~StepBackAndSteerTurnRecovery();
 
   /// Initialize the parameters of the behavior
-  void initialize (std::string n, tf::TransformListener* tf,
+  void initialize (std::string n, tf2_ros::Buffer* tf,
                    costmap_2d::Costmap2DROS* global_costmap,
                    costmap_2d::Costmap2DROS* local_costmap);
 
@@ -115,7 +118,7 @@ private:
   costmap_2d::Costmap2DROS* local_costmap_;
   costmap_2d::Costmap2D costmap_; // Copy of local_costmap_, used by world model
   std::string name_;
-  tf::TransformListener* tf_;
+  tf2_ros::Buffer* tf_;
   ros::Publisher cmd_vel_pub_;
   ros::Publisher recover_run_pub_;
   bool initialized_;
